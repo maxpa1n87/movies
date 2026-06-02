@@ -1,5 +1,11 @@
 from flask_login import UserMixin
+from sqlalchemy import Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
+from . import database
 
-class User(UserMixin):
+class User(UserMixin, database.db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str] = mapped_column()
     def get_id(self):
-        return str(1)
+        return str(self.id)

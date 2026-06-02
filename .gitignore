@@ -14,3 +14,5 @@ build/
 *.egg-info/
 
 secret_key
+database_uri
+

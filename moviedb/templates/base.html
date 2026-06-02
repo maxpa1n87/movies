@@ -21,9 +21,13 @@
                     <li><strong>The movie database</strong></li>
                 </ul>
                 <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Products</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><span>Hi {{ current_user.name }}!</span></li>
+                        <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                        <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                    {% endif %}
                 </ul>
             </nav>
             {% for message in get_flashed_messages() %}
