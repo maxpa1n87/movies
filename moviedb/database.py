@@ -3,10 +3,10 @@ from sqlalchemy.orm import DeclarativeBase
 from flask_sqlalchemy import SQLAlchemy
 
 class Base(DeclarativeBase):
-  pass
+    pass
 
 def init_db():
-
+    
     db = SQLAlchemy(model_class=Base)
 
     with current_app.open_resource('database_uri') as f:
@@ -16,9 +16,9 @@ def init_db():
     
     with current_app.app_context():
         db.create_all()
-        
-    g.db = db
-    
+        g.db = db
+
+    return g.db
 
 def get_db():
     if 'db' not in g:

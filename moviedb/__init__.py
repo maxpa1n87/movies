@@ -6,7 +6,7 @@ def create_app():
 
     from moviedb import database
     with app.app_context():
-        database.init_db() 
+        database.get_db() 
 
     with app.open_resource('secret_key') as f:
         app.secret_key = f.read().decode('utf8')
