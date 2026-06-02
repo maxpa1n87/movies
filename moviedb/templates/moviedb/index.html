@@ -6,16 +6,17 @@
 
 {% block content %}
     {% for movie in movies %}
-        <article class="movie">
+        <article>
             <header>
-                <h1>{{ movie['Title'] }}</h1>
-                <h2>{{ movie['Subtitle'] }}</h2>
-                <h3>{{ movie['Author'] }}</h3>
-                <h2>{{ movie['Release'] }}</h2>
+                <h2>{{ movie['Title'] }}</h2>
+                <h3>{{ movie['Subtitle'] }}</h3>
             </header>
-            <p class="body">
-                {{ movie['Description'] }}
-            </p>
+            {{ movie['Description'] }}
+            <footer>
+                <span>{{ movie['Author'] }}</span>
+                <i>{{ movie['Release'] }}</i>
+                
+            </footer>
         </article>
         {% if not loop.last %}
             <hr />

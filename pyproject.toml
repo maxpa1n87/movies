@@ -1,9 +1,11 @@
 [project]
 name = "moviedb"
 version = "1.0.0"
-description = "Movie database."
+description = "Movie database app."
 dependencies = [
     "flask",
+    "flask-login",
+    "flask-sqlalchemy"
 ]
 
 [build-system]
@@ -18,4 +20,4 @@ pythonpath = [
 
 [tool.coverage.run]
 branch = true
-source = ["blogger"]
+source = ["moviedb"]

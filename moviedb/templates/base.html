@@ -9,19 +9,30 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <h1>Movie DB</h1>
-        <nav class="navigation">
-            <ul>
-            </ul>
-        </nav>
-        <header>
-            {% block header %}{% endblock %}
-        </header>
-        <section class="container-fluid">
+        <main class="container-fluid">
+            <header>
+                <hgroup>
+                    <h1>Movie DB</h1>
+                    {% block header %}{% endblock %}
+                </hgroup>
+            </header>
+            <nav>
+                <ul>
+                    <li><strong>The movie database</strong></li>
+                </ul>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Products</a></li>
+                </ul>
+            </nav>
             {% for message in get_flashed_messages() %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
-            {% block content %}{% endblock %}
-        </section>
+            {% block content %}{% endblock %}   
+            <footer>
+                &copy; {{ today }}
+            </footer>
+        </main>
     </body>
 </html>
