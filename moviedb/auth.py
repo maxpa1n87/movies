@@ -1,12 +1,11 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
+    Blueprint, flash, redirect, render_template, request, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import g
 from moviedb.user import User
-from moviedb.database import get_db
+from moviedb.database import db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -15,7 +14,6 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
         error = None
 
         if not username:
@@ -25,12 +23,14 @@ def register():
 
         if error is None:
             try:
-                user = User(username=username, password=generate_password_hash(password))
+                user = User(
+                    username=username, 
+                    password=generate_password_hash(password))
                 db.session.add(user)
                 db.session.commit()
-            except db.IntegrityError:
+            except Exception:
                 error = f"User {username} is already registered."
-            #else:
+            else:
                 return redirect(url_for("auth.login"))
 
         flash(error)
