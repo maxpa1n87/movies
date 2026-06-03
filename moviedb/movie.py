@@ -5,8 +5,6 @@ from werkzeug.exceptions import abort
 from datetime import datetime
 from flask_login import login_required
 
-from moviedb.database import db
-
 bp = Blueprint('movie', __name__)
 
 @bp.route('/')
