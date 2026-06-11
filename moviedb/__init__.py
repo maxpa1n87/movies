@@ -1,43 +1,26 @@
 from flask import Flask
-from flask_login import LoginManager
-from sqlalchemy.orm import DeclarativeBase
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
-from sqlalchemy.orm import Mapped, mapped_column
+from moviedb.login import login_manager
+from moviedb.shared.models import db
+from moviedb import auth, movie
+ 
+def create_app():
+    app = Flask(__name__)
+    with app.open_resource('secret_key') as f:
+        app.secret_key = f.read().decode('utf8')
 
-class Base(DeclarativeBase):
-    pass
+    login_manager.init_app(app)
 
-app = Flask(__name__)
-with app.open_resource('secret_key') as f:
-    app.secret_key = f.read().decode('utf8')
+    with app.open_resource('database_uri') as f:
+        app.config['SQLALCHEMY_DATABASE_URI'] = f.read().decode('utf8')
+       
+    db.init_app(app)
 
-login_manager = LoginManager()
+    with app.app_context():
+        db.create_all()
+   
+    app.register_blueprint(auth.bp)
 
-login_manager.init_app(app)
+    app.register_blueprint(movie.bp)
+    app.add_url_rule('/', endpoint='index')
 
-db = SQLAlchemy(model_class=Base)
-
-with app.open_resource('database_uri') as f:
-    app.config['SQLALCHEMY_DATABASE_URI'] = f.read().decode('utf8')
-
-db.init_app(app)
-
-with app.app_context():
-    db.create_all()
-
-class User(UserMixin, db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(unique=True)
-    password: Mapped[str] = mapped_column()
-    
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get_id(user_id)
-
-from moviedb import auth
-app.register_blueprint(auth.bp)
-
-from moviedb import movie
-app.register_blueprint(movie.bp)
-app.add_url_rule('/', endpoint='index')
+    return app

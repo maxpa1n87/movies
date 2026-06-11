@@ -1,10 +1,14 @@
 import functools
 
 from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for
+    Blueprint, flash, redirect, render_template, request, url_for, session
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-from . import db, User
+
+from moviedb.shared.models import db
+from moviedb.users.models import User
+
+from flask_login import login_user, logout_user
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -38,8 +42,28 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    pass
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        error = None
+        user = db.session.execute(db.select(User).where(User.username==username)).one_or_none()
+
+        if user is None:
+            error = 'Incorrect username.'
+        elif not check_password_hash(user[0].password, password):
+            error = 'Incorrect password.'
+
+        if error is None:
+            login_user(user[0])
+            # session.clear()
+            # session['user_id'] = user[0].id
+            return redirect(url_for('index'))
+
+        flash(error)
+
+    return render_template('auth/login.html')
 
 @bp.route('/logout')
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for('index'))
