@@ -31,8 +31,9 @@ def register():
                     password=generate_password_hash(password))
                 db.session.add(user)
                 db.session.commit()
-            except Exception:
-                error = f"User {username} is already registered."
+            except Exception as e:
+                db.session.rollback()
+                error = f"User {username} is already registered. {e}"
             else:
                 return redirect(url_for("auth.login"))
 
@@ -46,17 +47,15 @@ def login():
         username = request.form['username']
         password = request.form['password']
         error = None
-        user = db.session.execute(db.select(User).where(User.username==username)).one_or_none()
+        user = db.session.execute(db.select(User).where(User.username==username)).scalar()
 
         if user is None:
             error = 'Incorrect username.'
-        elif not check_password_hash(user[0].password, password):
+        elif not check_password_hash(user.password, password):
             error = 'Incorrect password.'
 
         if error is None:
-            login_user(user[0])
-            # session.clear()
-            # session['user_id'] = user[0].id
+            login_user(user)
             return redirect(url_for('index'))
 
         flash(error)

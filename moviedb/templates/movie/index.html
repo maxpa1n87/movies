@@ -2,20 +2,22 @@
 
 {% block header %}
   <h1>{% block title %}Movies{% endblock %}</h1>
+  {% if current_user.is_authenticated %}
+    <a class="action" href="{{ url_for('movie.create') }}">New</a>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
     {% for movie in movies %}
         <article>
             <header>
-                <h2>{{ movie['Title'] }}</h2>
-                <h3>{{ movie['Subtitle'] }}</h3>
+                <h2>{{ movie['title'] }}</h2>
+                <h3>{{ movie['subtitle'] }}</h3>
             </header>
-            {{ movie['Description'] }}
+            {{ movie['description'] }}
             <footer>
-                <span>{{ movie['Author'] }}</span>
-                <i>{{ movie['Release'] }}</i>
-                
+                <p>{{ movie['author'] }}</p>
+                <i>{{ movie['release'].strftime('%Y') }}</i>
             </footer>
         </article>
         {% if not loop.last %}
