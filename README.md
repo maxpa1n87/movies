@@ -13,6 +13,18 @@ Activate it on Linux/Mac:
 
 > $ /bin/activate
 
+Create two files in the moviedb directory on Windows:
+
+> $ echo sqlite:///database.db > database_uri
+
+> $ echo 12345 > secret_key
+
+Create two files in the moviedb directory on Linux/Mac:
+
+> cat sqlite:///database.db > database_uri
+
+> cat 12345 > secret_key
+
 Install build package and build the package:
 
 > $ pip install build
@@ -26,18 +38,6 @@ This will create a file in the dist folder:
 Install it with pip:
 
 > $ pip install moviedb-1.0.0-py2.py3-none-any.whl
-
-Create two files in the moviedb directory on Windows:
-
-> $ echo sqlite:///database.db > database_uri
-
-> $ echo 12345 > secret_key
-
-Create two files in the moviedb directory on Linux/Mac:
-
-> cat sqlite:///database.db > database_uri
-
-> cat 12345 > secret_key 
 
 Run it with the following command:
 
