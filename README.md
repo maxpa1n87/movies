@@ -27,6 +27,18 @@ Install it with pip:
 
 > $ pip install moviedb-1.0.0-py2.py3-none-any.whl
 
+Create two files on Windows:
+
+> $ echo "sqlite:///movie.db" > database_uri
+
+> $ echo "12345" > secret_key
+
+Create two files on Linux/Mac:
+
+> cat "sqlite:///movie.db" > database_uri
+
+> cat "12345" > secret_key 
+
 Run it with the following command:
 
 > $ flask --app moviedb run --debug
