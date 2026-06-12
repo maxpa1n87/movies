@@ -35,9 +35,9 @@ Create two files on Windows:
 
 Create two files on Linux/Mac:
 
-> cat "sqlite:///movie.db" > database_uri
+> cat sqlite:///movie.db > database_uri
 
-> cat "12345" > secret_key 
+> cat 12345 > secret_key 
 
 Run it with the following command:
 
