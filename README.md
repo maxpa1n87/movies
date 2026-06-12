@@ -29,9 +29,9 @@ Install it with pip:
 
 Create two files on Windows:
 
-> $ echo "sqlite:///movie.db" > database_uri
+> $ echo sqlite:///movie.db > database_uri
 
-> $ echo "12345" > secret_key
+> $ echo 12345 > secret_key
 
 Create two files on Linux/Mac:
 
