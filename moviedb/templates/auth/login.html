@@ -6,10 +6,16 @@
 
 {% block content %}
   <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
+    <fieldset>
+      <label for="username">
+        Username
+        <input name="username" id="username" placeholder="Username" autocomplete="username" required>
+      </label>
+      <label for="password">
+        Password
+        <input type="password" name="password" id="password" placeholder="Password" required>
+      </label>
+    </fieldset>
     <input type="submit" value="Log In">
   </form>
 {% endblock %}

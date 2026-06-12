@@ -6,16 +6,28 @@
 
 {% block content %}
   <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required></input>
-    <label for="subtitle">Subtitle</label>
-    <input name="subtitle" id="subtitle" value="{{ request.form['subtitle'] }}"></input>
-    <label for="description">Description</label>
-    <textarea name="description" id="description">{{ request.form['description'] }}</textarea>
-    <label for="author">Author</label>
-    <input name="author" id="author" value="{{ request.form['author'] }}"></input>
-    <label for="release">Release</label>
-    <input name="release" id="release" value="{{ request.form['release'] }}"></input>
+    <fieldset>
+      <label for="title">
+        Title
+        <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] }}" required></input>
+      </label>
+      <label for="subtitle">
+        Subtitle
+        <input name="subtitle" id="subtitle" placeholder="Subtitle" autocomplete="subtitle" value="{{ request.form['subtitle'] }}"></input>
+      </label>
+      <label for="description">
+        Description
+        <textarea name="description" id="description" placeholder="Description" autocomplete="description">{{ request.form['description'] }}</textarea>
+      </label>
+      <label for="author">
+        Author
+        <input name="author" id="author" placeholder="Author" autocomplete="author" value="{{ request.form['author'] }}"></input>
+      </label>
+      <label for="release">
+        Release
+        <input name="release" id="release" placeholder="Release" autocomplete="release" value="{{ request.form['release'] }}"></input>
+      </label>
+    </fieldset>
     <input type="submit" value="Save">
   </form>
 {% endblock %}
