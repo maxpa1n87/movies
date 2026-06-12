@@ -27,15 +27,15 @@ Install it with pip:
 
 > $ pip install moviedb-1.0.0-py2.py3-none-any.whl
 
-Create two files on Windows:
+Create two files in the moviedb directory on Windows:
 
-> $ echo sqlite:///movie.db > database_uri
+> $ echo sqlite:///database.db > database_uri
 
 > $ echo 12345 > secret_key
 
-Create two files on Linux/Mac:
+Create two files in the moviedb directory on Linux/Mac:
 
-> cat sqlite:///movie.db > database_uri
+> cat sqlite:///database.db > database_uri
 
 > cat 12345 > secret_key 
 
