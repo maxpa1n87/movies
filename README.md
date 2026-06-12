@@ -7,11 +7,11 @@ To build the app and run it create a virtual enviornment:
 
 Activate it on Windows:
 
-> $ \Scripts\activate
+> $ .venv\Scripts\activate
 
 Activate it on Linux/Mac:
 
-> $ /bin/activate
+> $ .venv/bin/activate
 
 Create two files in the moviedb directory on Windows:
 
