@@ -1,7 +1,7 @@
 # Movies
 ## A simple movie database
 
-To build the app run create a virtual enviornment:
+To build the app and run it create a virtual enviornment:
 
 > $ python -m venv .venv
 
