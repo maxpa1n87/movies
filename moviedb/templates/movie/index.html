@@ -18,7 +18,8 @@
             {{ movie['description'] }}
             <footer>
                 <p>{{ movie['author'] }}</p>
-                <i>{{ movie['release'].strftime('%Y') }}</i>
+                <p>{{ movie['release'].strftime('%Y') }}</p>
+                <a href="{{ url_for('movie.update', id=movie['id']) }}">Update movie</a>
             </footer>
         </article>
         {% if not loop.last %}

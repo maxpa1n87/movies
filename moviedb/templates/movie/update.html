@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Update Movie{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <fieldset>
+      <label for="title">
+        Title
+        <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] or movie['title'] }}" required></input>
+      </label>
+      <label for="subtitle">
+        Subtitle
+        <input name="subtitle" id="subtitle" placeholder="Subtitle" autocomplete="subtitle" value="{{ request.form['subtitle'] or movie['subtitle'] }}"></input>
+      </label>
+      <label for="description">
+        Description
+        <textarea name="description" id="description" placeholder="Description" autocomplete="description">{{ request.form['description'] or movie['description'] }}</textarea>
+      </label>
+      <label for="author">
+        Author
+        <input name="author" id="author" placeholder="Author" autocomplete="author" value="{{ request.form['author'] or movie['author'] }}"></input>
+      </label>
+      <label for="release">
+        Release
+        <input name="release" id="release" placeholder="Release" autocomplete="release" value="{{ request.form['release'] or movie['release'] }}"></input>
+      </label>
+    </fieldset>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('movie.delete', id=movie['id']) }}" method="post">
+    <fieldset>
+        <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </fieldset>
+  </form>
+{% endblock %}

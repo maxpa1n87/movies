@@ -56,7 +56,7 @@ def login():
 
         if error is None:
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('movie.index'))
 
         flash(error)
 
@@ -65,4 +65,4 @@ def login():
 @bp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('movie.index'))

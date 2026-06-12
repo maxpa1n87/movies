@@ -54,9 +54,49 @@ def create():
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    pass
+    movie = db.get_or_404(Movie, id)
+
+    if request.method == 'POST':
+        title = request.form['title']
+        subtitle = request.form['subtitle']
+        description = request.form['description']
+        author = request.form['author']
+        release = request.form['release']
+        error = None
+
+        if not title:
+            error = 'Title is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            try:
+                movie.title = title
+                movie.subtitle = subtitle
+                movie.description = description
+                movie.author = author
+                movie.release = datetime.strptime(release, '%Y')
+                db.session.commit()
+            except IntegrityError as e:
+                db.session.rollback()
+                error = f"Movie {title} already exsist."
+            except Exception as e:
+               db.session.rollback()
+               error = f"Release date must be only the year with 4 digits."
+            else:
+                return redirect(url_for('movie.index'))
+            
+        if error is not None:
+            flash(error)
+
+    return render_template('movie/update.html', movie=movie)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    pass
+    movie = db.get_or_404(Movie, id)
+
+    db.session.delete(movie)
+    db.session.commit()
+
+    return redirect(url_for('movie.index'))
