@@ -1,6 +1,16 @@
 # Movies
 ## A simple movie database
 
+First install git and python.
+
+Clone this repository:
+
+> $ cd ~
+
+> $ git clone https://github.com/maxpa1n87/movies.git
+
+> $ cd movies
+
 To build the app and run it create a virtual enviornment:
 
 > $ python -m venv .venv
