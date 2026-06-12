@@ -16,6 +16,7 @@ $ /bin/activate
 Install build package and build the package:
 
 $ pip install build
+
 $ python -m build --wheel
 
 This will create a file in the dist folder:
