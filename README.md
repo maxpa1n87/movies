@@ -13,17 +13,23 @@ Activate it on Linux/Mac:
 
 > $ .venv/bin/activate
 
+Generate a secret key:
+> $ python
+> $ import secrets
+> $ secrets.token_hex(16)
+> $ '85b730634be30508a236261a268e8edb'
+
 Create two files in the moviedb directory on Windows:
 
 > $ echo sqlite:///database.db > database_uri
 
-> $ echo 12345 > secret_key
+> $ echo 85b730634be30508a236261a268e8edb > secret_key
 
 Create two files in the moviedb directory on Linux/Mac:
 
 > cat sqlite:///database.db > database_uri
 
-> cat 12345 > secret_key
+> cat 85b730634be30508a236261a268e8edb > secret_key
 
 Install build package and build the package:
 
