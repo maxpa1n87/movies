@@ -18,21 +18,21 @@ Generate a secret key:
 
 > $ >>> import secrets
 
-> $ >>> secrets.token_hex(16)
+> $ >>> print(secrets.token_hex())
 
-> $ '85b730634be30508a236261a268e8edb'
+> $ 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696
 
 Create two files in the moviedb directory on Windows:
 
 > $ echo sqlite:///database.db > database_uri
 
-> $ echo 85b730634be30508a236261a268e8edb > secret_key
+> $ echo 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
 
 Create two files in the moviedb directory on Linux/Mac:
 
 > cat sqlite:///database.db > database_uri
 
-> cat 85b730634be30508a236261a268e8edb > secret_key
+> cat 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
 
 Install build package and build the package:
 
