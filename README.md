@@ -15,8 +15,11 @@ Activate it on Linux/Mac:
 
 Generate a secret key:
 > $ python
-> $ import secrets
-> $ secrets.token_hex(16)
+
+> $ >>> import secrets
+
+> $ >>> secrets.token_hex(16)
+
 > $ '85b730634be30508a236261a268e8edb'
 
 Create two files in the moviedb directory on Windows:
