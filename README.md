@@ -3,30 +3,30 @@
 
 To build the app run create a virtual enviornment:
 
-$ python -m venv .venv
+> $ python -m venv .venv
 
 Activate it on Windows:
 
-$ \Scripts\activate
+> $ \Scripts\activate
 
 Activate it on Linux/Mac:
 
-$ /bin/activate
+> $ /bin/activate
 
 Install build package and build the package:
 
-$ pip install build
+> $ pip install build
 
-$ python -m build --wheel
+> $ python -m build --wheel
 
 This will create a file in the dist folder:
 
-dist/moviedb-1.0.0-py2.py3-none-any.whl
+> dist/moviedb-1.0.0-py2.py3-none-any.whl
 
 Install it with pip:
 
-$ pip install moviedb-1.0.0-py2.py3-none-any.whl
+> $ pip install moviedb-1.0.0-py2.py3-none-any.whl
 
 Run it with the following command:
 
-$ flask --app moviedb run --debug
+> $ flask --app moviedb run --debug
