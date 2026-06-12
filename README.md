@@ -35,7 +35,7 @@ Then you see this output:
 
  > * Running on http://127.0.0.1:5000
 
-Point your browser to [h](http://127.0.0.1:5000)
+Point your browser to http://127.0.0.1:5000
 
 Now you can register users and login, after loggin in you can create movie entries.
 
