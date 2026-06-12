@@ -30,3 +30,12 @@ Install it with pip:
 Run it with the following command:
 
 > $ flask --app moviedb run --debug
+
+Then you see this output:
+
+ > * Running on http://127.0.0.1:5000
+
+Point your browser to [h](http://127.0.0.1:5000)
+
+Now you can register users and login, after loggin in you can create movie entries.
+
