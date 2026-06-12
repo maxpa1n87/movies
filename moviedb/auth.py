@@ -33,7 +33,7 @@ def register():
                 db.session.commit()
             except Exception as e:
                 db.session.rollback()
-                error = f"User {username} is already registered. {e}"
+                error = f"User {username} is already registered."
             else:
                 return redirect(url_for("auth.login"))
 

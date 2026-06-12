@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import 'macros/pagination.html' as pagination_macro %}
 
 {% block header %}
   <h1>{% block title %}Movies{% endblock %}</h1>
@@ -8,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    {% for movie in movies %}
+    {% for movie in page %}
         <article>
             <header>
                 <h2>{{ movie['title'] }}</h2>
@@ -24,4 +25,5 @@
             <hr />
         {% endif %}
     {% endfor %}
+    {{ pagination_macro.render_pagination(page, 'movie.index') }}
 {% endblock %}

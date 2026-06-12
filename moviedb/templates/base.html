@@ -12,7 +12,7 @@
         <main class="container-fluid">
             <header>
                 <hgroup>
-                    <h1>Movie DB</h1>
+                    <h1><a href="{{ url_for('movie.index')}}">Movie DB</a></h1>
                     {% block header %}{% endblock %}
                 </hgroup>
             </header>
@@ -35,7 +35,7 @@
             {% endfor %}
             {% block content %}{% endblock %}   
             <footer>
-                &copy; {{ today }}
+                &copy; maxpa1n87 2026
             </footer>
         </main>
     </body>

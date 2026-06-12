@@ -12,9 +12,8 @@ bp = Blueprint('movie', __name__)
 
 @bp.route('/')
 def index():
-    movies = db.session.execute(db.select(Movie)).scalars()
-    today = datetime.today().strftime('%d.%m.%Y')
-    return render_template('movie/index.html', movies=movies, today=today)
+    page = db.paginate(db.select(Movie), max_per_page=5)
+    return render_template('movie/index.html', page=page)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
