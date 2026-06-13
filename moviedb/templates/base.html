@@ -21,31 +21,32 @@
                 <ul>
                     {% if current_user.is_authenticated %}
                         <li><h2>Hi {{ current_user.username }}!</h2></li>
+                    {% endif %}
+                    <li>
+                        <form action="{{ url_for('movie.search') }}" method="get">
+                            <fieldset class="grid">
+                                <input type="search" name="search_string" id="search_string" placeholder="Search" aria-label="Search"></input>
+                                <input type="submit" value="Search"></input>
+                            </fieldset>
+                        </form>
+                    </li>
+                    {% if current_user.is_authenticated %}
                         <li>
-                            <form action="{{ url_for('movie.search') }}" method="get">
-                                <fieldset class="grid">
-                                    <input type="search" name="search_string" id="search_string" placeholder="Search" aria-label="Search"></input>
-                                    <input type="submit" value="Search"></input>
-                                </fieldset>
-                            </form>
-                        </li>
-                        <li>
-                            <!-- <a href="{{ url_for('movie.create') }}">Create new movie</a></li> -->
                             <form action="{{ url_for('movie.create') }}" method="get">
                                 <fieldset class="grid">
                                     <input type="submit" value="Create new movie"></input>
                                 </fieldset>
                             </form>
+                        </li>
                         <li>
-                            <!-- <a href="{{ url_for('auth.logout') }}">Log Out</a> -->
                             <form action="{{ url_for('auth.logout') }}" method="get">
                                 <fieldset class="grid">
                                     <input style="background-color:red; border-color:red;" type="submit" value="Logout"></input>
                                 </fieldset>
                             </form>
                         </li>
-                    {% else %}
-                        <!-- <li><a href="{{ url_for('auth.register') }}">Register</a></li> -->
+                    {% endif %}
+                    {% if current_user.is_authenticated == false %}
                         <li>
                             <form action="{{ url_for('auth.register') }}" method="get">
                                 <fieldset class="grid">
@@ -53,7 +54,6 @@
                                 </fieldset>
                             </form>
                         </li>
-                        <!-- <li><a href="{{ url_for('auth.login') }}">Log In</a></li> -->
                         <li>
                             <form action="{{ url_for('auth.login') }}" method="get">
                                 <fieldset class="grid">
