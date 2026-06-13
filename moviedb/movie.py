@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for
+    Blueprint, render_template, request, flash, redirect, url_for, current_app
 )
 from werkzeug.exceptions import abort
 from datetime import datetime
@@ -7,6 +7,10 @@ from flask_login import login_required
 from moviedb.shared.models import db
 from moviedb.movies.models import Movie
 from sqlalchemy.exc import IntegrityError
+from secrets import token_hex
+import pathlib
+import os
+from werkzeug.utils import secure_filename
 
 bp = Blueprint('movie', __name__)
 
@@ -33,6 +37,11 @@ def create():
         author = request.form['author']
         release = request.form['release']
         error = None
+        file = None
+        filename = None
+
+        if 'image' in request.files:
+            file = request.files['image']
 
         if not title:
             error = {'movie_title_is_required' : 'Title is required.' }
@@ -41,8 +50,18 @@ def create():
             flash(error)
         else:
             try:
+                if file and file.filename != '':
+                    filename = secure_filename(file.filename)
+                    suffix= pathlib.Path(filename).suffix
+                    new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], token_hex(8) + suffix)
+                    file.save(new_filename)
                 release_date = datetime.strptime(release, '%Y-%m-%d')
-                movie = Movie(title=title, subtitle=subtitle, description=description, author=author, release=release_date)
+                movie = Movie(title=title, 
+                              subtitle=subtitle, 
+                              description=description, 
+                              author=author, 
+                              release=release_date, 
+                              image=new_filename)
                 db.session.add(movie)
                 db.session.commit()
             except ValueError as e:
@@ -50,7 +69,7 @@ def create():
                 error = { 'movie_date_time_invalid' : 'Release date must be in the format YYYY.MM.DD' }
             except IntegrityError as e:
                 db.session.rollback()
-                error = { 'movie_title_is_invalid' : f"Movie {title} already exsist." }
+                error = { 'movie_title_is_invalid' : f"Movie {title} already exsist. {e}" }
             else:
                 return redirect(url_for('movie.index'))
             

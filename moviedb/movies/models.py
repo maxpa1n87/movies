@@ -9,3 +9,4 @@ class Movie(db.Model):
     description: Mapped[str] = mapped_column()
     author: Mapped[str] = mapped_column()
     release: Mapped[datetime] = mapped_column()
+    image: Mapped[str] = mapped_column(nullable=True)

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <form method="post">
+  <form enctype="multipart/form-data" method="post">
     <fieldset>
       <label for="title">
         Title
@@ -54,6 +54,10 @@
             </small>
           {% endif %}
         {% endfor %}
+      </label>
+      <label for="image">
+        Image
+        <input name="image" id="image" type="file" accept="image/*"></input>
       </label>
     </fieldset>
     <input type="submit" value="Save"></input>
