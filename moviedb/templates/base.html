@@ -23,10 +23,27 @@
                 <ul>
                     {% if current_user.is_authenticated %}
                         <li><span>Hi {{ current_user.username }}!</span></li>
+                        <li><a href="{{ url_for('movie.create') }}">Create new movie</a></li>
                         <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
                     {% else %}
-                        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                        <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                        <!-- <li><a href="{{ url_for('auth.register') }}">Register</a></li> -->
+                         <li>
+                            <form action="{{ url_for('auth.register') }}" method="get">
+                                <fieldset class="grid">
+                                    <input type="submit" value="Register"></input>
+                                </fieldset>
+                            </form>
+                         </li>
+                        <!-- <li><a href="{{ url_for('auth.login') }}">Log In</a></li> -->
+                        <li>
+                            <form action="{{ url_for('auth.login') }}" method="post">
+                                <fieldset class="grid">
+                                    <input width="500px" name="username" id="username" placeholder="Username" autocomplete="username" aria-label="Login" required>
+                                    <input type="password" name="password" id="password" placeholder="Password" aria-label="Password" required>
+                                    <input style="background-color:green; border-color:green;" type="submit" value="Log In">
+                                </fieldset>
+                            </form>
+                        </li>
                     {% endif %}
                 </ul>
             </nav>

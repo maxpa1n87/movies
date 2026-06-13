@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from moviedb.shared.models import db
 from moviedb.users.models import User
 
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -63,6 +63,7 @@ def login():
     return render_template('auth/login.html')
 
 @bp.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('movie.index'))
