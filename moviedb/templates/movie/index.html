@@ -17,7 +17,12 @@
                 <p>{{ movie['author'] }}</p>
                 <p>{{ movie['release'].strftime('%Y-%m-%d') }}</p>
                 {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('movie.update', id=movie['id']) }}">Update movie</a>
+                    <!-- <a href="{{ url_for('movie.update', id=movie['id']) }}">Update movie</a> -->
+                     <form action="{{ url_for('movie.update', id=movie['id']) }}" method="get">
+                        <fieldset>
+                            <input type="submit" value="Update movie"></input>
+                        </fieldset>
+                     </form>
                 {% endif %}
             </footer>
         </article>
