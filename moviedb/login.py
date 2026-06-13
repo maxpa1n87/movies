@@ -1,6 +1,7 @@
 from flask_login import LoginManager
 from moviedb.shared.models import db
 from moviedb.users.models import User
+from flask import redirect, url_for
 
 login_manager = LoginManager()
 
@@ -10,3 +11,7 @@ def load_user(user_id):
     if user == None:
         return None
     return user
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return redirect(url_for('auth.login'))
