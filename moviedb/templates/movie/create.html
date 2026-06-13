@@ -11,14 +11,18 @@
         Title
         <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] }}" required
         {% for message in get_flashed_messages() %}
-          aria-invalid="true"
-          aria-describedby="invalid-helper"
+          {% if 'movie_title_is_invalid' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-helper"
+          {% endif %}
         {% endfor %}
         ></input>
         {% for message in get_flashed_messages() %}
-          <small id="invalid-helper">
-            {{ message }}
-          </small>
+          {% if 'movie_title_is_invalid' in message %}
+            <small id="invalid-helper">
+              {{ message['movie_title_is_invalid'] }}
+            </small>
+          {% endif %}
         {% endfor %}
       </label>
       <label for="subtitle">
@@ -35,7 +39,21 @@
       </label>
       <label for="release">
         Release
-        <input name="release" id="release" placeholder="Release" autocomplete="release" type="date" aria-label="Release" value="{{ request.form['release'] }}"></input>
+        <input name="release" id="release" placeholder="Release" autocomplete="release" type="date" aria-label="Release" value="{{ request.form['release'] }}"
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_date_time_invalid' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-helper"
+          {% endif %}
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_date_time_invalid' in message %}
+            <small id="invalid-helper">
+              {{ message['movie_date_time_invalid'] }}
+            </small>
+          {% endif %}
+        {% endfor %}
       </label>
     </fieldset>
     <input type="submit" value="Save"></input>

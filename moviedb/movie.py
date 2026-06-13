@@ -27,7 +27,7 @@ def create():
         error = None
 
         if not title:
-            error = 'Title is required.'
+            error = {'movie_title_is_required' : 'Title is required.' }
 
         if error is not None:
             flash(error)
@@ -37,12 +37,12 @@ def create():
                 movie = Movie(title=title, subtitle=subtitle, description=description, author=author, release=release_date)
                 db.session.add(movie)
                 db.session.commit()
+            except ValueError as e:
+                db.session.rollback()
+                error = { 'movie_date_time_invalid' : 'Release date must be in the format YYYY.MM.DD' }
             except IntegrityError as e:
                 db.session.rollback()
-                error = f"Movie {title} already exsist."
-            except Exception as e:
-                db.session.rollback()
-                error = f"Release date must be only the year with 4 digits."
+                error = { 'movie_title_is_invalid' : f"Movie {title} already exsist." }
             else:
                 return redirect(url_for('movie.index'))
             
