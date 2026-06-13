@@ -28,7 +28,7 @@
         <input name="release" id="release" placeholder="Release" autocomplete="release" value="{{ request.form['release'] or movie['release'].strftime('%Y') }}"></input>
       </label>
     </fieldset>
-    <input type="submit" value="Save">
+    <input type="submit" value="Save"></input>
   </form>
   <hr>
   <form action="{{ url_for('movie.delete', id=movie['id']) }}" method="post">
