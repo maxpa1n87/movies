@@ -12,11 +12,13 @@
                 <h2>{{ movie['title'] }}</h2>
                 <h3>{{ movie['subtitle'] }}</h3>
             </header>
-            {{ movie['description'] }}
+            <p>{{ movie['description'] }}</p>
             <footer>
                 <p>{{ movie['author'] }}</p>
                 <p>{{ movie['release'].strftime('%Y') }}</p>
-                <a href="{{ url_for('movie.update', id=movie['id']) }}">Update movie</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('movie.update', id=movie['id']) }}">Update movie</a>
+                {% endif %}
             </footer>
         </article>
         {% if not loop.last %}
