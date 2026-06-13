@@ -9,7 +9,17 @@
     <fieldset>
       <label for="title">
         Title
-        <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] }}" required></input>
+        <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] }}" required
+        {% for message in get_flashed_messages() %}
+          aria-invalid="true"
+          aria-describedby="invalid-helper"
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          <small id="invalid-helper">
+            {{ message }}
+          </small>
+        {% endfor %}
       </label>
       <label for="subtitle">
         Subtitle
@@ -25,7 +35,7 @@
       </label>
       <label for="release">
         Release
-        <input name="release" id="release" placeholder="Release" autocomplete="release" value="{{ request.form['release'] }}"></input>
+        <input name="release" id="release" placeholder="Release" autocomplete="release" type="date" aria-label="Release" value="{{ request.form['release'] }}"></input>
       </label>
     </fieldset>
     <input type="submit" value="Save"></input>

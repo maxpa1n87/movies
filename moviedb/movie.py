@@ -33,7 +33,7 @@ def create():
             flash(error)
         else:
             try:
-                release_date = datetime.strptime(release, '%Y')
+                release_date = datetime.strptime(release, '%Y-%m-%d')
                 movie = Movie(title=title, subtitle=subtitle, description=description, author=author, release=release_date)
                 db.session.add(movie)
                 db.session.commit()
@@ -75,7 +75,7 @@ def update(id):
                 movie.subtitle = subtitle
                 movie.description = description
                 movie.author = author
-                movie.release = datetime.strptime(release, '%Y')
+                movie.release = datetime.strptime(release, '%Y-%m-%d')
                 db.session.commit()
             except IntegrityError as e:
                 db.session.rollback()

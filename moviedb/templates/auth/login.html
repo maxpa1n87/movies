@@ -9,7 +9,17 @@
     <fieldset>
       <label for="username">
         Username
-        <input name="username" id="username" placeholder="Username" autocomplete="username" required></input>
+        <input name="username" id="username" placeholder="Username" autocomplete="username" required
+        {% for message in get_flashed_messages() %}
+          aria-invalid="true"
+          aria-describedby="invalid-helper"
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          <small id="invalid-helper">
+            {{ message }}
+          </small>
+        {% endfor %}
       </label>
       <label for="password">
         Password
