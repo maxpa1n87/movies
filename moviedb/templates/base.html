@@ -11,7 +11,7 @@
     <body>
         <header class="container">
             <hgroup>
-                <h1><a href="{{ url_for('movie.index')}}">Movie DB</a></h1>
+                <h1><a href="{{ url_for('movie.index') }}">Movie DB</a></h1>
                 {% block header %}{% endblock %}
             </hgroup>
             <nav>
@@ -21,6 +21,14 @@
                 <ul>
                     {% if current_user.is_authenticated %}
                         <li><h2>Hi {{ current_user.username }}!</h2></li>
+                        <li>
+                            <form action="{{ url_for('movie.search') }}" method="get">
+                                <fieldset class="grid">
+                                    <input type="search" name="search_string" id="search_string" placeholder="Search" aria-label="Search"></input>
+                                    <input type="submit" value="Search"></input>
+                                </fieldset>
+                            </form>
+                        </li>
                         <li>
                             <!-- <a href="{{ url_for('movie.create') }}">Create new movie</a></li> -->
                             <form action="{{ url_for('movie.create') }}" method="get">

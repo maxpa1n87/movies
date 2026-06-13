@@ -15,6 +15,14 @@ def index():
     page = db.paginate(db.select(Movie), max_per_page=5)
     return render_template('movie/index.html', page=page)
 
+@bp.route('/search')
+def search():
+    page = None
+    search_string = request.args.get('search_string')
+    if search_string is not None:
+        page = db.paginate(db.select(Movie).where(Movie.title == search_string), max_per_page=5)
+    return render_template('movie/index.html', page=page)
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
