@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, current_app, send_from_directory
+    Blueprint, render_template, request, flash, redirect, url_for, send_from_directory
 )
 from werkzeug.exceptions import abort
 from datetime import datetime
@@ -8,11 +8,8 @@ from moviedb.shared.models import db
 from moviedb.movies.models import Movie
 from sqlalchemy.exc import IntegrityError
 from secrets import token_hex
-import pathlib
-import os
 from werkzeug.utils import secure_filename
-from PIL import Image
-import moviedb
+from shared.utils import upload_file
 
 bp = Blueprint('movie', __name__)
 
@@ -28,32 +25,6 @@ def search():
     if search_string is not None:
         page = db.paginate(db.select(Movie).where(Movie.title == search_string), max_per_page=5)
     return render_template('movie/index.html', page=page)
-
-def upload_file(request):
-    file = None
-    filename = None
-    save_filename = None
-    new_filename = None
-
-    if 'image' in request.files:
-        file = request.files['image']
-
-    if file and file.filename != '':
-        filename = secure_filename(file.filename)
-        suffix= pathlib.Path(filename).suffix
-        module_path = os.path.dirname(os.path.abspath(moviedb.__file__))
-        full_path = os.path.join(module_path, current_app.config['UPLOAD_FOLDER'])
-        if os.path.exists(full_path) == False:
-            os.mkdir(full_path)   
-        only_filename = token_hex(8) + suffix
-        save_filename = os.path.join(full_path, only_filename)
-        file.save(save_filename)
-        new_image = Image.open(save_filename)
-        new_image.thumbnail((255, 255), Image.Resampling.LANCZOS)
-        new_image.save(save_filename)
-        new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
-    
-    return new_filename
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required

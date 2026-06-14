@@ -1,7 +1,7 @@
 import functools
 
 from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for, session
+    Blueprint, flash, redirect, render_template, request, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 

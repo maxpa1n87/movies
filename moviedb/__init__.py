@@ -2,8 +2,6 @@ from flask import Flask
 from moviedb.login import login_manager
 from moviedb.shared.models import db
 from moviedb import auth, movie
-import os
-import moviedb
 
 def create_app():
     app = Flask(__name__)
