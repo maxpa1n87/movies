@@ -1,5 +1,5 @@
 # Movies
-## A simple movie database
+## A simple movie database written in Flask
 
 First install git and python.
 
