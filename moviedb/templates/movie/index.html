@@ -17,7 +17,10 @@
                     <p>No image available</p>
                 {% endif %}
             </header>
-            <blockquote>{{ movie['description'] }}</blockquote>
+            <details name="description">
+                <summary>Description</summary>
+                <p>{{ movie['description'] }}</p>
+            </details>
             <footer>
                 <p>{{ movie['author'] }}</p>
                 <p>{{ movie['release'].strftime('%Y-%m-%d') }}</p>
