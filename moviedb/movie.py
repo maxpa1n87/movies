@@ -11,6 +11,7 @@ from secrets import token_hex
 import pathlib
 import os
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 bp = Blueprint('movie', __name__)
 
@@ -53,15 +54,21 @@ def create():
                 if file and file.filename != '':
                     filename = secure_filename(file.filename)
                     suffix= pathlib.Path(filename).suffix
-                    new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], token_hex(8) + suffix)
+                    if os.path.exists(current_app.config['UPLOAD_FOLDER']) == False:
+                        os.mkdir(current_app.config['UPLOAD_FOLDER'])   
+                    only_filename = token_hex(8) + suffix
+                    new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
                     file.save(new_filename)
+                    new_image = Image.open(new_filename)
+                    new_image.thumbnail((255, 255), Image.Resampling.LANCZOS)
+                    new_image.save(new_filename)
                 release_date = datetime.strptime(release, '%Y-%m-%d')
                 movie = Movie(title=title, 
                               subtitle=subtitle, 
                               description=description, 
                               author=author, 
                               release=release_date, 
-                              image=new_filename)
+                              image=only_filename)
                 db.session.add(movie)
                 db.session.commit()
             except ValueError as e:

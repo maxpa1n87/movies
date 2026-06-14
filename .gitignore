@@ -16,3 +16,4 @@ build/
 secret_key
 database_uri
 
+uploads/

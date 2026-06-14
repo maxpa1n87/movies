@@ -3,6 +3,7 @@ from moviedb.login import login_manager
 from moviedb.shared.models import db
 from moviedb import auth, movie
 import os
+import moviedb
 
 def create_app():
     app = Flask(__name__)
@@ -14,7 +15,7 @@ def create_app():
     with app.open_resource('database_uri') as f:
         app.config['SQLALCHEMY_DATABASE_URI'] = f.read().decode('utf8')
 
-    app.config['UPLOAD_FOLDER'] = 'uploads'
+    app.config['UPLOAD_FOLDER'] = os.path.join('moviedb', os.path.join('static', 'uploads'))
 
     db.init_app(app)
 

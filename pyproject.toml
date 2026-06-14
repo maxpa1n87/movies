@@ -5,7 +5,8 @@ description = "Movie database app."
 dependencies = [
     "flask",
     "flask-login",
-    "flask-sqlalchemy"
+    "flask-sqlalchemy",
+    "pillow"
 ]
 
 [build-system]
