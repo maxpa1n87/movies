@@ -14,6 +14,7 @@ def create_app():
         app.config['SQLALCHEMY_DATABASE_URI'] = f.read().decode('utf8')
 
     app.config['UPLOAD_FOLDER'] = 'uploads'
+    app.config['MAX_CONTENT_LENGTH'] =  8 * 1000 * 1000
 
     db.init_app(app)
 

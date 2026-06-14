@@ -57,7 +57,10 @@
       </label>
       <label for="image">
         Image
-        <input name="image" id="image" type="file" accept="image/*"></input>
+        <input name="image" id="image" type="file" accept="image/*" aria-describedby="image-helper"></input>
+        <small id="image-helper">
+          Maximum filesize is {{ config['MAX_CONTENT_LENGTH'] / 1000 / 1000 }}MB
+        </small>
       </label>
     </fieldset>
     <input type="submit" value="Save"></input>
