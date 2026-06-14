@@ -1,7 +1,7 @@
 from flask import Flask
 from moviedb.login import login_manager
 from moviedb.shared.models import db
-from moviedb import auth, movie
+from moviedb import auth, movie, download
 
 def create_app():
     app = Flask(__name__)
@@ -26,4 +26,6 @@ def create_app():
     app.register_blueprint(movie.bp)
     app.add_url_rule('/', endpoint='index')
 
+    app.register_blueprint(download.bp)
+    
     return app

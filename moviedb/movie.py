@@ -1,14 +1,13 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, send_from_directory, current_app
+    Blueprint, render_template, request, flash, redirect, url_for
 )
-from werkzeug.exceptions import abort
+
 from datetime import datetime
 from flask_login import login_required
 from moviedb.shared.models import db
 from moviedb.movies.models import Movie
 from sqlalchemy.exc import IntegrityError
 from secrets import token_hex
-from werkzeug.utils import secure_filename
 from moviedb.shared.utils import upload_file, delete_old_file
 
 bp = Blueprint('movie', __name__)
@@ -117,12 +116,8 @@ def update(id):
 @login_required
 def delete(id):
     movie = db.get_or_404(Movie, id)
-
+    delete_old_file(movie.image)
     db.session.delete(movie)
     db.session.commit()
 
     return redirect(url_for('movie.index'))
-
-@bp.route('/uploads/<name>')
-def download_file(name):
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], name)
