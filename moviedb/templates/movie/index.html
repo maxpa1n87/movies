@@ -11,9 +11,13 @@
             <header>
                 <h2>{{ movie['title'] }}</h2>
                 <h3>{{ movie['subtitle'] }}</h3>
-                <img src="{{ movie['image'] }}"></img> 
+                {% if movie['image'] != None %}
+                    <img src="{{ movie['image'] }}"></img> 
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
             </header>
-            <p>{{ movie['description'] }}</p>
+            <blockquote>{{ movie['description'] }}</blockquote>
             <footer>
                 <p>{{ movie['author'] }}</p>
                 <p>{{ movie['release'].strftime('%Y-%m-%d') }}</p>
