@@ -15,7 +15,7 @@ def create_app():
     with app.open_resource('database_uri') as f:
         app.config['SQLALCHEMY_DATABASE_URI'] = f.read().decode('utf8')
 
-    app.config['UPLOAD_FOLDER'] = os.path.join('moviedb', os.path.join('static', 'uploads'))
+    app.config['UPLOAD_FOLDER'] = 'uploads'
 
     db.init_app(app)
 

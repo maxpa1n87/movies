@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, current_app
+    Blueprint, render_template, request, flash, redirect, url_for, current_app, send_from_directory
 )
 from werkzeug.exceptions import abort
 from datetime import datetime
@@ -12,6 +12,7 @@ import pathlib
 import os
 from werkzeug.utils import secure_filename
 from PIL import Image
+import moviedb
 
 bp = Blueprint('movie', __name__)
 
@@ -28,6 +29,32 @@ def search():
         page = db.paginate(db.select(Movie).where(Movie.title == search_string), max_per_page=5)
     return render_template('movie/index.html', page=page)
 
+def upload_file(request):
+    file = None
+    filename = None
+    save_filename = None
+    new_filename = None
+
+    if 'image' in request.files:
+        file = request.files['image']
+
+    if file and file.filename != '':
+        filename = secure_filename(file.filename)
+        suffix= pathlib.Path(filename).suffix
+        module_path = os.path.dirname(os.path.abspath(moviedb.__file__))
+        full_path = os.path.join(module_path, current_app.config['UPLOAD_FOLDER'])
+        if os.path.exists(full_path) == False:
+            os.mkdir(full_path)   
+        only_filename = token_hex(8) + suffix
+        save_filename = os.path.join(full_path, only_filename)
+        file.save(save_filename)
+        new_image = Image.open(save_filename)
+        new_image.thumbnail((255, 255), Image.Resampling.LANCZOS)
+        new_image.save(save_filename)
+        new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
+    
+    return new_filename
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
@@ -38,11 +65,7 @@ def create():
         author = request.form['author']
         release = request.form['release']
         error = None
-        file = None
-        filename = None
-
-        if 'image' in request.files:
-            file = request.files['image']
+        new_filename = None
 
         if not title:
             error = {'movie_title_is_required' : 'Title is required.' }
@@ -51,24 +74,14 @@ def create():
             flash(error)
         else:
             try:
-                if file and file.filename != '':
-                    filename = secure_filename(file.filename)
-                    suffix= pathlib.Path(filename).suffix
-                    if os.path.exists(current_app.config['UPLOAD_FOLDER']) == False:
-                        os.mkdir(current_app.config['UPLOAD_FOLDER'])   
-                    only_filename = token_hex(8) + suffix
-                    new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
-                    file.save(new_filename)
-                    new_image = Image.open(new_filename)
-                    new_image.thumbnail((255, 255), Image.Resampling.LANCZOS)
-                    new_image.save(new_filename)
+                new_filename = upload_file(request)
                 release_date = datetime.strptime(release, '%Y-%m-%d')
                 movie = Movie(title=title, 
                               subtitle=subtitle, 
                               description=description, 
                               author=author, 
                               release=release_date, 
-                              image=only_filename)
+                              image=new_filename)
                 db.session.add(movie)
                 db.session.commit()
             except ValueError as e:
@@ -134,3 +147,7 @@ def delete(id):
     db.session.commit()
 
     return redirect(url_for('movie.index'))
+
+@bp.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], name)
