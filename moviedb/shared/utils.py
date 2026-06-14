@@ -33,3 +33,10 @@ def upload_file(request):
         return new_filename
     
     return None
+
+def delete_old_file(filename):
+    if filename is not None:
+        module_path = os.path.dirname(os.path.abspath(moviedb.__file__))
+        full_path = os.path.join(module_path, filename)
+        if os.path.exists(full_path):
+            os.remove(full_path)
