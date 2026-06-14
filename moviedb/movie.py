@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, send_from_directory
+    Blueprint, render_template, request, flash, redirect, url_for, send_from_directory, current_app
 )
 from werkzeug.exceptions import abort
 from datetime import datetime
@@ -9,7 +9,7 @@ from moviedb.movies.models import Movie
 from sqlalchemy.exc import IntegrityError
 from secrets import token_hex
 from werkzeug.utils import secure_filename
-from shared.utils import upload_file
+from moviedb.shared.utils import upload_file
 
 bp = Blueprint('movie', __name__)
 
