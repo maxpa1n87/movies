@@ -26,8 +26,10 @@ def upload_file(request):
         save_filename = os.path.join(full_path, only_filename)
         file.save(save_filename)
         new_image = Image.open(save_filename)
-        new_image.thumbnail((255, 255), Image.Resampling.LANCZOS)
+        new_image.thumbnail((255, 255))
         new_image.save(save_filename)
         new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
+        
+        return new_filename
     
-    return new_filename
+    return None
