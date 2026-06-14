@@ -11,7 +11,7 @@
     <body>
         <header class="container">
             <hgroup>
-                <h1><a href="{{ url_for('movie.index') }}">Movie DB</a></h1>
+                <h1>Movie DB</h1>
                 {% block header %}{% endblock %}
             </hgroup>
             <aside>
@@ -30,6 +30,9 @@
                                     <input type="submit" value="Search"></input>
                                 </fieldset>
                             </form>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('movie.index') }}">Home</a>
                         </li>
                         {% if current_user.is_authenticated %}
                             <li>
