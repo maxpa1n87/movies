@@ -19,7 +19,7 @@
         Title
         <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] or movie['title'] }}" required
         {% for message in get_flashed_messages() %}
-          {% if 'movie_update_invalid_title' in message %}
+          {% if 'movie_update_invalid_title' in message or 'movie_update_movie_already_exists' in message %}
             aria-invalid="true"
             aria-describedby="invalid-title-helper"
           {% endif %}
@@ -29,6 +29,11 @@
           {% if 'movie_update_invalid_title' in message %}
             <small id="invalid-title-helper">
               {{ message['movie_update_invalid_title'] }}
+            </small>
+          {% endif %}
+          {% if 'movie_update_movie_already_exists' in message %}
+            <small id="invalid-title-helper">
+              {{ message['movie_update_movie_already_exists'] }}
             </small>
           {% endif %}
         {% endfor %}

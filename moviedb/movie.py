@@ -51,9 +51,9 @@ def create():
         if not release:
             error = {'movie_create_invalid_release': 'Release is required.' }
 
-        movie = db.session.execute(db.select(Movie).where(Movie.title == title)).scalar()
+        existing_movie = db.session.execute(db.select(Movie).where(Movie.title == title)).scalar()
 
-        if movie is not None:
+        if existing_movie is not None:
             error = {'movie_create_movie_already_exists': f'The movie with the title {title} already exists.' }
 
         if error is not None:
@@ -79,8 +79,8 @@ def create():
             else:
                 return redirect(url_for('movie.index'))
             
-        if error is not None:
-            flash(error)
+            if error is not None:
+                flash(error)
 
     return render_template('movie/create.html')
 
@@ -112,6 +112,11 @@ def update(id):
         if not release:
             error = {'movie_update_invalid_release' : 'Release is required.' }
 
+        existing_movie = db.session.execute(db.select(Movie).where(Movie.title == title)).scalar()
+
+        if existing_movie is not None:
+            error = {'movie_update_movie_already_exists' : f'The movie with the title {title} already exists.' }
+
         if error is not None:
             flash(error)
         else:
@@ -135,8 +140,8 @@ def update(id):
             else:
                 return redirect(url_for('movie.index'))
             
-        if error is not None:
-            flash(error)
+            if error is not None:
+                flash(error)
 
     return render_template('movie/update.html', movie=movie)
 
