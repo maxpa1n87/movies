@@ -13,13 +13,13 @@
         {% for message in get_flashed_messages() %}
           {% if 'auth_login_incorrect_username' in message %}
             aria-invalid="true"
-            aria-describedby="invalid-helper"
+            aria-describedby="invalid-username-helper"
           {% endif %}
         {% endfor %}
         ></input>
         {% for message in get_flashed_messages() %}
           {% if 'auth_login_incorrect_username' in message %}
-            <small id="invalid-helper">
+            <small id="invalid-username-helper">
               {{ message['auth_login_incorrect_username'] }}
             </small>
           {% endif %}
@@ -31,13 +31,13 @@
         {% for message in get_flashed_messages() %}
           {% if 'auth_login_incorrect_password' in message %}
             aria-invalid="true"
-            aria-describedby="invalid-helper"
+            aria-describedby="invalid-password-helper"
           {% endif %}
         {% endfor %}
         ></input>
         {% for message in get_flashed_messages() %}
           {% if 'auth_login_incorrect_password' in message %}
-            <small id="invalid-helper">
+            <small id="invalid-password-helper">
               {{ message['auth_login_incorrect_password'] }}
             </small>
           {% endif %}

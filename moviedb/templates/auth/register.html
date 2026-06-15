@@ -7,31 +7,50 @@
 {% block content %}
   <form method="post">
     <fieldset>
+      {% for message in get_flashed_messages() %}
+        {% if 'auth_register_integrity_error' in message %}
+          {{ message['auth_register_integrity_error'] }}
+        {% endif %}
+      {% endfor %}
       <label for="username">
         Username
         <input name="username" id="username" placeholder="Username" autocomplete="username" required
         {% for message in get_flashed_messages() %}
-          {% if 'auth_register_invalid_username' in message or 'auth_register_username_already_registered' in message  %}
+          {% if 'auth_register_invalid_username' in message or 'auth_register_user_already_registred' in message  %}
             aria-invalid="true"
-            aria-describedby="invalid-helper"
+            aria-describedby="invalid-username-helper"
           {% endif %}
         {% endfor %}
         ></input>
         {% for message in get_flashed_messages() %}
             {% if 'auth_register_invalid_username' in message %}
-              <small id="invalid-helper">
+              <small id="invalid-username-helper">
                 {{ message['auth_register_invalid_username'] }}
               </small>
-            {% elif 'auth_register_username_already_registered' in message %}
-              <small id="invalid-helper">
-                {{ message['auth_register_username_already_registered'] }}
+            {% elif 'auth_register_user_already_registred' in message %}
+              <small id="invalid-username-helper">
+                {{ message['auth_register_user_already_registred'] }}
               </small>
             {% endif %}
         {% endfor %}
       </label>
       <label for="password">
         Password
-        <input type="password" name="password" id="password" placeholder="Password" required></input>
+        <input type="password" name="password" id="password" placeholder="Password" required
+        {% for message in get_flashed_messages() %}
+          {% if 'auth_register_invalid_password' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-password-helper"
+          {% endif %}
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          {% if 'auth_register_invalid_password' in message %}
+            <small id="invalid-password-helper">
+                {{ message['auth_register_invalid_password'] }}
+            </small>
+          {% endif %}
+        {% endfor %}
       </label>
     </fieldset>
     <input type="submit" value="Register"></input>

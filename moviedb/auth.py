@@ -21,7 +21,14 @@ def register():
         elif not password:
             error = { 'auth_register_invalid_password': 'Password is required.' }
 
-        if error is None:
+        user = db.session.execute(db.select(User).where(User.username == username)).scalar()
+
+        if user is not None:
+            error = { 'auth_register_user_already_registred' : f'User {username} is already registered.' }
+
+        if error is not None:
+            flash(error)
+        else:
             try:
                 user = User(
                     username=username, 
@@ -30,11 +37,12 @@ def register():
                 db.session.commit()
             except IntegrityError as e:
                 db.session.rollback()
-                error = { 'auth_register_username_already_registered' : f"User {username} is already registered." }
+                error = { 'auth_register_integrity_error' : 'An integrity error was raised. {e.code}'  }
             else:
                 return redirect(url_for("auth.login"))
-
-        flash(error)
+            
+        if error is not None:
+            flash(error)
 
     return render_template('auth/register.html')
 
@@ -44,6 +52,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         error = None
+        
         user = db.session.execute(db.select(User).where(User.username==username)).scalar()
 
         if user is None:
