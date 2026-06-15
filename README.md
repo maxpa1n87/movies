@@ -32,17 +32,21 @@ Generate a secret key:
 
 > $ 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696
 
-Create two files in the moviedb directory on Windows:
+Create three files in the moviedb directory on Windows:
 
 > $ echo sqlite:///database.db > database_uri
 
 > $ echo 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
 
-Create two files in the moviedb directory on Linux/Mac:
+> $ echo C:\tmp\uploads > upload_folder
 
-> cat sqlite:///database.db > database_uri
+Create three files in the moviedb directory on Linux/Mac:
 
-> cat 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
+> $ cat sqlite:///database.db > database_uri
+
+> $ cat 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
+
+> $ cat /tmp/uploads
 
 Install build package and build the package:
 
@@ -60,7 +64,7 @@ Install it with pip:
 
 Run it with the following command:
 
-> $ flask --app moviedb run --debug
+> $ flask --app moviedb run
 
 Then you see this output:
 
@@ -69,4 +73,3 @@ Then you see this output:
 Point your browser to http://127.0.0.1:5000
 
 Now you can register users and login, after loggin in you can create movie entries.
-

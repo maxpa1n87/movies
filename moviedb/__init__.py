@@ -3,6 +3,7 @@ from moviedb.login import login_manager
 from moviedb.shared.models import db
 from moviedb import auth, movie, download
 import os
+from sqlalchemy.exc import OperationalError
 
 def create_app():
     app = Flask(__name__)
@@ -24,8 +25,11 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        db.create_all()
-   
+        try:
+            db.create_all()
+        except OperationalError as e:
+            db.reflect()
+           
     app.register_blueprint(auth.bp)
 
     app.register_blueprint(movie.bp)
