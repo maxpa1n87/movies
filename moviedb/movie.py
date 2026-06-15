@@ -37,7 +37,24 @@ def create():
         new_filename = None
 
         if not title:
-            error = {'movie_title_is_required' : 'Title is required.' }
+            error = {'movie_create_invalid_title' : 'Title is required.' }
+
+        if not subtitle:
+            error = {'movie_create_invalid_subtitle': 'Subtitle is required.' }
+
+        if not description:
+            error = {'movie_create_invalid_description': 'Description is required.' }
+
+        if not author:
+            error = {'movie_create_invalid_author': 'Author is required.' }
+        
+        if not release:
+            error = {'movie_create_invalid_release': 'Release is required.' }
+
+        movie = db.session.execute(db.select(Movie).where(Movie.title == title)).scalar()
+
+        if movie is not None:
+            error = {'movie_create_movie_already_exists': f'The movie with the title {title} already exists.' }
 
         if error is not None:
             flash(error)
@@ -55,10 +72,10 @@ def create():
                 db.session.commit()
             except ValueError as e:
                 db.session.rollback()
-                error = { 'movie_date_time_invalid' : 'Release date must be in the format YYYY.MM.DD' }
+                error = { 'movie_create_value_error' : f'A value error occured. {e}' }
             except IntegrityError as e:
                 db.session.rollback()
-                error = { 'movie_title_is_invalid' : f"Movie {title} already exsist." }
+                error = { 'movie_create_integrity_error' : f"A integrity error occured. {e.code}" }
             else:
                 return redirect(url_for('movie.index'))
             

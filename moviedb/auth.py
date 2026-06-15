@@ -18,7 +18,8 @@ def register():
 
         if not username:
             error = { 'auth_register_invalid_username': 'Username is required.' }
-        elif not password:
+        
+        if not password:
             error = { 'auth_register_invalid_password': 'Password is required.' }
 
         user = db.session.execute(db.select(User).where(User.username == username)).scalar()
@@ -37,7 +38,7 @@ def register():
                 db.session.commit()
             except IntegrityError as e:
                 db.session.rollback()
-                error = { 'auth_register_integrity_error' : 'An integrity error was raised. {e.code}'  }
+                error = { 'auth_register_integrity_error' : f'An integrity error was raised. {e.code}'  }
             else:
                 return redirect(url_for("auth.login"))
             
