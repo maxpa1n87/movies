@@ -98,7 +98,19 @@ def update(id):
         error = None
 
         if not title:
-            error = {'movie_title_is_required' : 'Title is required.' }
+            error = {'movie_update_invalid_title' : 'Title is required.' }
+
+        if not subtitle:
+            error = {'movie_update_invalid_subtitle' : 'Subtitle is required.' }
+
+        if not description:
+            error = {'movie_update_invalid_description' : 'Description is required.' }
+
+        if not author:
+            error = {'movie_update_invalid_author' : 'Author is required.' }
+
+        if not release:
+            error = {'movie_update_invalid_release' : 'Release is required.' }
 
         if error is not None:
             flash(error)
@@ -116,10 +128,10 @@ def update(id):
                 db.session.commit()
             except ValueError as e:
                 db.session.rollback()
-                error = { 'movie_date_time_invalid' : 'Release date must be in the format YYYY.MM.DD' }
+                error = { 'movie_update_value_error' : f'A value error occured. {e}' }
             except IntegrityError as e:
                 db.session.rollback()
-                error = { 'movie_title_is_invalid' : f"Movie {title} already exsist." }
+                error = { 'movie_update_integrity_error' : f"A integrity error occured. {e.code}" }
             else:
                 return redirect(url_for('movie.index'))
             

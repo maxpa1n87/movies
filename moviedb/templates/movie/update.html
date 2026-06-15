@@ -7,50 +7,100 @@
 {% block content %}
   <form enctype="multipart/form-data" method="post">
     <fieldset>
+      {% for message in get_flashed_messages() %}
+        {% if 'movie_update_value_error' in message %}
+          {{ message['movie_update_value_error'] }}
+        {% endif %}
+        {% if 'movie_update_integrity_error' in message %}
+          {{ message['movie_update_integrity_error'] }}
+        {% endif %}
+      {% endfor %}
       <label for="title">
         Title
         <input name="title" id="title" placeholder="Title" autocomplete="title" value="{{ request.form['title'] or movie['title'] }}" required
         {% for message in get_flashed_messages() %}
-          {% if 'movie_title_is_invalid' in message %}
+          {% if 'movie_update_invalid_title' in message %}
             aria-invalid="true"
-            aria-describedby="invalid-helper"
+            aria-describedby="invalid-title-helper"
           {% endif %}
         {% endfor %}
         ></input>
         {% for message in get_flashed_messages() %}
-          {% if 'movie_title_is_invalid' in message %}
-            <small id="invalid-helper">
-              {{ message['movie_title_is_invalid'] }}
+          {% if 'movie_update_invalid_title' in message %}
+            <small id="invalid-title-helper">
+              {{ message['movie_update_invalid_title'] }}
             </small>
           {% endif %}
         {% endfor %}
       </label>
       <label for="subtitle">
         Subtitle
-        <input name="subtitle" id="subtitle" placeholder="Subtitle" autocomplete="subtitle" value="{{ request.form['subtitle'] or movie['subtitle'] }}"></input>
-      </label>
-      <label for="description">
-        Description
-        <textarea name="description" id="description" placeholder="Description" autocomplete="description">{{ request.form['description'] or movie['description'] }}</textarea>
-      </label>
-      <label for="author">
-        Author
-        <input name="author" id="author" placeholder="Author" autocomplete="author" value="{{ request.form['author'] or movie['author'] }}"></input>
-      </label>
-      <label for="release">
-        Release
-        <input name="release" id="release" placeholder="Release" autocomplete="release" type="date" aria-label="Release" value="{{ request.form['release'] or movie['release'].strftime('%Y-%m-%d') }}"
+        <input name="subtitle" id="subtitle" placeholder="Subtitle" autocomplete="subtitle" value="{{ request.form['subtitle'] or movie['subtitle'] }}" required
         {% for message in get_flashed_messages() %}
-          {% if 'movie_date_time_invalid' in message %}
+          {% if 'movie_update_invalid_subtitle' in message %}
             aria-invalid="true"
-            aria-describedby="invalid-helper"
+            aria-describedby="invalid-subtitle-helper"
           {% endif %}
         {% endfor %}
         ></input>
         {% for message in get_flashed_messages() %}
-          {% if 'movie_date_time_invalid' in message %}
-            <small id="invalid-helper">
-              {{ message['movie_date_time_invalid'] }}
+          {% if 'movie_update_invalid_subtitle' in message %}
+            <small id="invalid-subtitle-helper">
+              {{ message['movie_update_invalid_subtitle'] }}
+            </small>
+          {% endif %}
+        {% endfor %}
+      </label>
+      <label for="description">
+        Description
+        <textarea name="description" id="description" placeholder="Description" autocomplete="description" required
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_invalid_description' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-description-helper"
+          {% endif %}
+        {% endfor %}
+        >{{ request.form['description'] or movie['description'] }}</textarea>
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_invalid_description' in message %}
+            <small id="invalid-description-helper">
+              {{ message['movie_update_invalid_description'] }}
+            </small>
+          {% endif %}
+        {% endfor %}
+      </label>
+      <label for="author">
+        Author
+        <input name="author" id="author" placeholder="Author" autocomplete="author" value="{{ request.form['author'] or movie['author'] }}" required
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_invalid_author' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-author-helper"
+          {% endif %}
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_invalid_author' in message %}
+            <small id="invalid-author-helper">
+              {{ message['movie_update_invalid_author'] }}
+            </small>
+          {% endif %}
+        {% endfor %}
+      </label>
+      <label for="release">
+        Release
+        <input name="release" id="release" placeholder="Release" autocomplete="release" type="date" aria-label="Release" value="{{ request.form['release'] or movie['release'].strftime('%Y-%m-%d') }}" required
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_invalid_release' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-release-helper"
+          {% endif %}
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_invalid_release' in message %}
+            <small id="invalid-release-helper">
+              {{ message['movie_update_invalid_release'] }}
             </small>
           {% endif %}
         {% endfor %}
