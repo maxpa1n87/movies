@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for
+    Blueprint, render_template, request, flash, redirect, url_for, current_app
 )
 
 from datetime import datetime
@@ -14,7 +14,7 @@ bp = Blueprint('movie', __name__)
 
 @bp.route('/')
 def index():
-    page = db.paginate(db.select(Movie), max_per_page=5)
+    page = db.paginate(db.select(Movie), max_per_page=current_app.config['MAX_PAGES_PER_PAGE'])
     return render_template('movie/index.html', page=page)
 
 @bp.route('/search')
@@ -22,7 +22,7 @@ def search():
     page = None
     search_string = request.args.get('search_string')
     if search_string is not None:
-        page = db.paginate(db.select(Movie).where(Movie.title == search_string), max_per_page=5)
+        page = db.paginate(db.select(Movie).where(Movie.title == search_string), max_per_page=current_app.config['MAX_PAGES_PER_PAGE'])
     return render_template('movie/index.html', page=page)
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -44,7 +44,7 @@ def create():
             flash(error)
         else:
             try:
-                new_filename = upload_file(request)
+                new_filename = upload_file(request, 'image')
                 release_date = datetime.strptime(release, '%Y-%m-%d')
                 movie = Movie(title=title, 
                               subtitle=subtitle, 
@@ -88,7 +88,7 @@ def update(id):
             flash(error)
         else:
             try:
-                new_image = upload_file(request)
+                new_image = upload_file(request, 'image')
                 if new_image is not None:
                     delete_old_file(movie.image)
                 movie.title = title

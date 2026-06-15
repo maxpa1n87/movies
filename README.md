@@ -1,5 +1,5 @@
 # Movies
-## A simple movie database written in Flask
+## A simple movie database written in Flask and Pico CSS
 
 First install git and python.
 

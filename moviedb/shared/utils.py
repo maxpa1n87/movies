@@ -6,37 +6,40 @@ import os
 from secrets import token_hex
 from PIL import Image
 
-def upload_file(request):
+def upload_file(request, field_name):
     file = None
     filename = None
     save_filename = None
-    new_filename = None
+    root_path = None
 
-    if 'image' in request.files:
-        file = request.files['image']
+    if field_name in request.files:
+        file = request.files[field_name]
 
     if file and file.filename != '':
         filename = secure_filename(file.filename)
         suffix= pathlib.Path(filename).suffix
-        module_path = os.path.dirname(os.path.abspath(moviedb.__file__))
-        full_path = os.path.join(module_path, current_app.config['UPLOAD_FOLDER'])
-        if os.path.exists(full_path) == False:
-            os.mkdir(full_path)   
         only_filename = token_hex(8) + suffix
-        save_filename = os.path.join(full_path, only_filename)
-        file.save(save_filename)
-        new_image = Image.open(save_filename)
+        save_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
+        if current_app.config['DEBUG']:
+            root_path = os.path.join(current_app.root_path, save_filename)
+        else:
+            root_path = save_filename
+        file.save(root_path)
+        new_image = Image.open(root_path)
         new_image.thumbnail((255, 255))
-        new_image.save(save_filename)
-        new_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
+        new_image.save(root_path)
         
-        return new_filename
+        return save_filename
     
     return None
 
 def delete_old_file(filename):
+    root_path = None
+
     if filename is not None:
-        module_path = os.path.dirname(os.path.abspath(moviedb.__file__))
-        full_path = os.path.join(module_path, filename)
-        if os.path.exists(full_path):
-            os.remove(full_path)
+        if current_app.config['DEBUG']:
+            root_path = os.path.join(current_app.root_path, filename)
+        else:
+            root_path = filename
+        if os.path.exists(root_path):
+            os.remove(root_path)
