@@ -29,7 +29,20 @@ def upload_file(request, field_name):
         new_image.thumbnail((255, 255))
         new_image.save(root_path)
         
-        return save_filename
+        new_path = os.path.normpath(save_filename)
+        splitted = new_path.split(os.sep)
+
+        link_name = None
+        index = 0
+
+        for i in range(len(splitted)):
+            if splitted[i] == 'uploads':
+                index = i
+                break
+
+        link_name = os.path.join(splitted[index], splitted[len(splitted) - 1])
+
+        return link_name
     
     return None
 
