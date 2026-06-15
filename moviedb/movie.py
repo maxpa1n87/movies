@@ -7,7 +7,6 @@ from flask_login import login_required
 from moviedb.shared.models import db
 from moviedb.movies.models import Movie
 from sqlalchemy.exc import IntegrityError
-from secrets import token_hex
 from moviedb.shared.utils import upload_file, delete_old_file
 
 bp = Blueprint('movie', __name__)
