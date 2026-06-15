@@ -53,6 +53,7 @@ def delete_old_file(filename):
         if current_app.config['DEBUG']:
             root_path = os.path.join(current_app.root_path, filename)
         else:
-            root_path = filename
+            splitted = str(filename).split(os.sep)
+            root_path = os.path.join(current_app.config['UPLOAD_FOLDER'], splitted[len(splitted) - 1])
         if os.path.exists(root_path):
             os.remove(root_path)
