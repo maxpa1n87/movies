@@ -27,7 +27,8 @@ def upload_file(request, field_name):
         fixed_image = ImageOps.exif_transpose(new_image)
         fixed_image.thumbnail((255, 255))
         fixed_image.save(root_path)
-
+        new_image.close()
+        fixed_image.close()
         return os.path.join('uploads', only_filename)
     
     return None
