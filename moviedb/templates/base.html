@@ -37,37 +37,17 @@
                         {% if current_user.is_authenticated %}
                             <li>
                                 <a href="{{ url_for('movie.create') }}">Create new movie</a>
-                                <!-- <form action="{{ url_for('movie.create') }}" method="get">
-                                    <fieldset class="grid">
-                                        <input type="submit" value="Create new movie"></input>
-                                    </fieldset>
-                                </form> -->
                             </li>
                             <li>
                                 <a href="{{ url_for('auth.logout') }}">Logout</a>
-                                <!-- <form action="{{ url_for('auth.logout') }}" method="get">
-                                    <fieldset class="grid">
-                                        <input style="background-color:red; border-color:red;" type="submit" value="Logout"></input>
-                                    </fieldset>
-                                </form> -->
                             </li>
                         {% endif %}
                         {% if current_user.is_authenticated == false %}
                             <li>
                                 <a href="{{ url_for('auth.register') }}">Register</a>
-                                <!-- <form action="{{ url_for('auth.register') }}" method="get">
-                                    <fieldset class="grid">
-                                        <input type="submit" value="Register"></input>
-                                    </fieldset>
-                                </form> -->
                             </li>
                             <li>
                                 <a href="{{ url_for('auth.login') }}">Log In</a>
-                                <!-- <form action="{{ url_for('auth.login') }}" method="get">
-                                    <fieldset class="grid">
-                                        <input style="background-color:green; border-color:green;" type="submit" value="Log In"></input>
-                                    </fieldset>
-                                </form> -->
                             </li>
                         {% endif %}
                     </ul>

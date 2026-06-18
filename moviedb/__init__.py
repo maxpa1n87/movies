@@ -2,34 +2,23 @@ from flask import Flask
 from moviedb.login import login_manager
 from moviedb.shared.models import db
 from moviedb import auth, movie, download
-import os
 from sqlalchemy.exc import OperationalError
 
 def create_app():
     app = Flask(__name__)
 
-    with app.open_resource('secret_key') as f:
-        app.config['SECRET_KEY'] = f.read().decode('utf8')
+    if app.config['DEBUG']:
+        app.config.from_object('moviedb.default_settings')
+    else:
+        app.config.from_envvar('MOVIEDB_SETTINGS')
 
     login_manager.init_app(app)
-
-    with app.open_resource('database_uri') as f:
-        app.config['SQLALCHEMY_DATABASE_URI'] = f.read().decode('utf8')
-
-    with app.open_resource('upload_folder') as f:
-        app.config['UPLOAD_FOLDER'] = f.read().decode('utf8')
-
-    app.config['MAX_CONTENT_LENGTH'] =  8 * 1000 * 1000
-    app.config['MAX_PAGES_PER_PAGE'] = 5
 
     db.init_app(app)
 
     with app.app_context():
-        try:
-            db.create_all()
-        except OperationalError as e:
-            db.reflect()
-           
+        db.create_all()
+                   
     app.register_blueprint(auth.bp)
 
     app.register_blueprint(movie.bp)

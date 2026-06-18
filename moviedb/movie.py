@@ -8,6 +8,7 @@ from moviedb.shared.models import db
 from moviedb.movies.models import Movie
 from sqlalchemy.exc import IntegrityError
 from moviedb.shared.utils import upload_file, delete_old_file
+from werkzeug.exceptions import RequestEntityTooLarge
 
 bp = Blueprint('movie', __name__)
 
@@ -76,6 +77,9 @@ def create():
             except IntegrityError as e:
                 db.session.rollback()
                 error = { 'movie_create_integrity_error' : f"A integrity error occured. {e.code}" }
+            except RequestEntityTooLarge as e:
+                db.session.rollback()
+                error = { 'movie_create_request_entity_too_large' : f"The file is too large for upload. {e.code}"}
             else:
                 return redirect(url_for('movie.index'))
             
@@ -112,11 +116,6 @@ def update(id):
         if not release:
             error = {'movie_update_invalid_release' : 'Release is required.' }
 
-        # existing_movie = db.session.execute(db.select(Movie).where(Movie.title == title)).scalar()
-
-        # if existing_movie is not None:
-        #    error = {'movie_update_movie_already_exists' : f'The movie with the title {title} already exists.' }
-
         if error is not None:
             flash(error)
         else:
@@ -136,7 +135,10 @@ def update(id):
                 error = { 'movie_update_value_error' : f'A value error occured. {e}' }
             except IntegrityError as e:
                 db.session.rollback()
-                error = { 'movie_update_integrity_error' : f"A integrity error occured. {e.code}" }
+                error = { 'movie_update_integrity_error' : f"A integrity error occured. {e.code} " + "Maybe the Movie Title already exists." }
+            except RequestEntityTooLarge as e:
+                db.session.rollback()
+                error = { 'movie_update_request_entity_too_large' : f"The file is too large for upload. {e.code}"}
             else:
                 return redirect(url_for('movie.index'))
             

@@ -32,21 +32,13 @@ Generate a secret key:
 
 > $ 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696
 
-Create three files in the moviedb directory on Windows:
+Adjust settings either in default_settings.py or make a copy and supply:
 
-> $ echo sqlite:///database.db > database_uri
+Linux/Mac:
+> $ export MOVIEDB_SETTINGS=/path/to/settings.py
 
-> $ echo 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
-
-> $ echo C:\tmp\uploads > upload_folder
-
-Create three files in the moviedb directory on Linux/Mac:
-
-> $ cat sqlite:///database.db > database_uri
-
-> $ cat 159e168b2f39239958da822999d645d2121ef4ce072fb68698f1dfd2dccc6696 > secret_key
-
-> $ cat /tmp/uploads
+Windows:
+> $ set MOVIEDB_SETTINGS=C:\path\to\settings.py
 
 Install build package and build the package:
 

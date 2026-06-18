@@ -112,7 +112,21 @@
       </label>
       <label for="image">
         Image
-        <input name="image" id="image" type="file" accept="image/*" aria-describedby="image-helper"></input>
+        <input name="image" id="image" type="file" accept="image/*" aria-describedby="image-helper"
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_request_entity_too_large' in message %}
+            aria-invalid="true"
+            aria-describedby="invalid-image-helper"
+          {% endif %}
+        {% endfor %}
+        ></input>
+        {% for message in get_flashed_messages() %}
+          {% if 'movie_update_request_entity_too_large' in message %}
+            <small id="invalid-image-helper">
+              {{ message['movie_update_request_entity_too_large'] }}
+            </small>
+          {% endif %}
+        {% endfor %}
         <small id="image-helper">
           Maximum filesize is {{ config['MAX_CONTENT_LENGTH'] / 1000 / 1000 }}MB
         </small>
