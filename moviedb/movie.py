@@ -29,7 +29,6 @@ def search():
 @login_required
 def create():
     if request.method == 'POST':
-        request.max_content_length = current_app.config['MAX_UPLOAD_SIZE']
         title = request.form['title']
         subtitle = request.form['subtitle']
         description = request.form['description']
@@ -95,7 +94,6 @@ def update(id):
     movie = db.get_or_404(Movie, id)
 
     if request.method == 'POST':
-        request.max_content_length = current_app.config['MAX_UPLOAD_SIZE']
         title = request.form['title']
         subtitle = request.form['subtitle']
         description = request.form['description']

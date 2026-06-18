@@ -3,7 +3,8 @@ from werkzeug.utils import secure_filename
 import pathlib
 import os
 from secrets import token_hex
-from PIL import Image
+from PIL import Image, ImageOps
+from werkzeug.exceptions import RequestEntityTooLarge
 
 def upload_file(request, field_name):
     file = None
@@ -21,10 +22,11 @@ def upload_file(request, field_name):
             root_path = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
         else:
             root_path = os.path.join(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']), only_filename)
-        file.save(root_path)
+        file.save(root_path, current_app.config['MAX_BUFFER_SIZE_FOR_FILE'])
         new_image = Image.open(root_path)
-        new_image.thumbnail((255, 255))
-        new_image.save(root_path)
+        fixed_image = ImageOps.exif_transpose(new_image)
+        fixed_image.thumbnail((255, 255))
+        fixed_image.save(root_path)
 
         return os.path.join('uploads', only_filename)
     
