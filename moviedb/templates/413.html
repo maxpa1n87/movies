@@ -6,6 +6,6 @@
 
 {% block content %}
     <h1>Request Entity Too Large 413</h1>
-    <p>Sorry the maximum size of {{ config['MAX_UPLOAD_SIZE'] }} bytes has been exceeded.</p>
+    <p>Sorry the maximum size of {{ config['MAX_UPLOAD_SIZE'] / 1000 / 1000 }}MB has been exceeded.</p>
 {% endblock %}
 
