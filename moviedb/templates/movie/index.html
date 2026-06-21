@@ -12,7 +12,7 @@
                 <h2>{{ movie['title'] }}</h2>
                 <h3>{{ movie['subtitle'] }}</h3>
                 {% if movie['image'] != None %}
-                    <img src="{{ movie['image'] }}"></img> 
+                    <img src="{{ url_for('download.download_file', name=movie['image']) }}"></img> 
                 {% else %}
                     <p>No image available</p>
                 {% endif %}

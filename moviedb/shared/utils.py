@@ -17,7 +17,7 @@ def upload_file(request, field_name):
     if file and file.filename != '':
         filename = secure_filename(file.filename)
         suffix= pathlib.Path(filename).suffix
-        only_filename = token_hex(8) + suffix
+        only_filename = token_hex() + suffix
         if os.path.isabs(current_app.config['UPLOAD_FOLDER']):
             root_path = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
         else:
@@ -29,7 +29,7 @@ def upload_file(request, field_name):
         fixed_image.save(root_path)
         new_image.close()
         fixed_image.close()
-        return os.path.join('uploads', only_filename)
+        return only_filename
     
     return None
 
@@ -38,8 +38,8 @@ def delete_old_file(filename):
 
     if filename is not None:
         if os.path.isabs(current_app.config['UPLOAD_FOLDER']):
-            root_path = os.path.join(current_app.config['UPLOAD_FOLDER'], str(filename).split(os.sep)[1])
+            root_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         else:
-            root_path = os.path.join(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']), str(filename).split(os.sep)[1])
+            root_path = os.path.join(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']), filename)
         if os.path.exists(root_path):
             os.remove(root_path)
