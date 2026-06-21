@@ -32,6 +32,3 @@ def create_app():
     app.add_url_rule('/uploads/<name>', endpoint="download_file", build_only=True)
     
     return app
-
-if __name__ == '__main__':
-    create_app()
