@@ -10,11 +10,18 @@ def upload_file(request, field_name):
     file = None
     filename = None   
     root_path = None
+    file_size = 0
 
     if field_name in request.files:
         file = request.files[field_name]
 
     if file and file.filename != '':
+        file.seek(0, os.SEEK_END)
+        file_size = file.tell()
+        file.seek(0, os.SEEK_SET)
+        if file_size > current_app.config['MAX_UPLOAD_SIZE']:
+            raise RequestEntityTooLarge()
+        
         filename = secure_filename(file.filename)
         suffix= pathlib.Path(filename).suffix
         only_filename = token_hex() + suffix
