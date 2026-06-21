@@ -121,8 +121,7 @@ def update(id):
         else:
             try:
                 new_image = upload_file(request, 'image')
-                if new_image is not None:
-                    delete_old_file(movie.image)
+                delete_old_file(movie.image)
                 movie.title = title
                 movie.subtitle = subtitle
                 movie.description = description
