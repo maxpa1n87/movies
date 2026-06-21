@@ -112,7 +112,7 @@
       </label>
       <label for="image">
         Image
-        <input name="image" id="image" type="file" accept="image/*" aria-describedby="image-helper"
+        <input name="image" id="image" type="file" accept="image/*" aria-describedby="image-helper" value="{{ request.form['image'] }}"
         {% for message in get_flashed_messages() %}
           {% if 'movie_create_request_entity_too_large' in message %}
             aria-invalid="true"

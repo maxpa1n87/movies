@@ -121,13 +121,15 @@ def update(id):
         else:
             try:
                 new_image = upload_file(request, 'image')
-                delete_old_file(movie.image)
+                if new_image is not None:
+                    delete_old_file(movie.image)
                 movie.title = title
                 movie.subtitle = subtitle
                 movie.description = description
                 movie.author = author
                 movie.release = datetime.strptime(release, '%Y-%m-%d')
-                movie.image = new_image
+                if new_image is not None:
+                    movie.image = new_image
                 db.session.commit()
             except ValueError as e:
                 db.session.rollback()
