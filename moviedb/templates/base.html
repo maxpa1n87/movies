@@ -15,7 +15,7 @@
                 {% block header %}{% endblock %}
             </hgroup>
             <aside>
-                <nav>
+                <nav role="navigation">
                     <ul>
                         <li><strong>The movie database</strong></li>
                     </ul>
@@ -31,22 +31,26 @@
                                 </fieldset>
                             </form>
                         </li>
-                        <li>
+                    </ul>
+                    <input type="checkbox" id="hamburger" />
+                    <label for="hamburger" style="font-size: calc(var(--pico-font-size) * 1.5);">&#x2261;</label> 
+                    <ul role="list">
+                        <li role="listitem">
                             <a href="{{ url_for('movie.index') }}">Home</a>
                         </li>
                         {% if current_user.is_authenticated %}
-                            <li>
+                            <li role="listitem">
                                 <a href="{{ url_for('movie.create') }}">Create new movie</a>
                             </li>
-                            <li>
+                            <li role="listitem">
                                 <a href="{{ url_for('auth.logout') }}">Logout</a>
                             </li>
                         {% endif %}
                         {% if current_user.is_authenticated == false %}
-                            <li>
+                            <li role="listitem">
                                 <a href="{{ url_for('auth.register') }}">Register</a>
                             </li>
-                            <li>
+                            <li role="listitem">
                                 <a href="{{ url_for('auth.login') }}">Log In</a>
                             </li>
                         {% endif %}
