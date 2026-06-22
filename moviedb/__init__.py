@@ -7,10 +7,8 @@ from moviedb import error_handlers
 def create_app():
     app = Flask(__name__)
 
-    if app.config['DEBUG']:
-        app.config.from_object('moviedb.default_settings')
-    else:
-        app.config.from_envvar('MOVIEDB_SETTINGS')
+    app.config.from_object('moviedb.default_settings')
+    app.config.from_envvar('MOVIEDB_SETTINGS', silent=True)
 
     app.register_error_handler(404, error_handlers.page_not_found)
     app.register_error_handler(405, error_handlers.method_not_allowed)
