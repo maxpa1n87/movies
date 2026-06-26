@@ -25,10 +25,9 @@ def upload_file(request, field_name):
         filename = secure_filename(file.filename)
         suffix= pathlib.Path(filename).suffix
         only_filename = token_hex() + suffix
-        if os.path.isabs(current_app.config['UPLOAD_FOLDER']):
-            full_path = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
-        else:
-            full_path = os.path.join(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']), only_filename)
+        
+        full_path = os.path.join(current_app.config['UPLOAD_FOLDER'], only_filename)
+
         file.save(full_path, current_app.config['MAX_BUFFER_SIZE_FOR_FILE'])
         new_image = Image.open(full_path)
         fixed_image = ImageOps.exif_transpose(new_image)
@@ -36,6 +35,7 @@ def upload_file(request, field_name):
         fixed_image.save(full_path)
         new_image.close()
         fixed_image.close()
+
         return only_filename
     
     return None
@@ -44,9 +44,8 @@ def delete_old_file(filename):
     full_path = None
 
     if filename is not None:
-        if os.path.isabs(current_app.config['UPLOAD_FOLDER']):
-            full_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-        else:
-            full_path = os.path.join(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']), filename)
+        
+        full_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        
         if os.path.exists(full_path):
             os.remove(full_path)
