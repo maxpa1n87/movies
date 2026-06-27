@@ -50,9 +50,13 @@ This will create a file in the dist folder:
 
 > dist/moviedb-1.0.0-py2.py3-none-any.whl
 
+Or use the pre-build binary from here:
+
+https://github.com/maxpa1n87/movies/releases/download/v1.0.1/moviedb-1.0.1-py2.py3-none-any.whl
+
 Install it with pip:
 
-> $ pip install moviedb-1.0.0-py2.py3-none-any.whl
+> $ pip install moviedb-1.0.1-py2.py3-none-any.whl
 
 Install waitress:
 
