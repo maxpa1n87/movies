@@ -5,7 +5,7 @@ First install git and python.
 
 Clone this repository:
 
-> $ cd ~
+> $ cd <home_dir>
 
 > $ git clone https://github.com/maxpa1n87/movies.git
 
@@ -21,7 +21,7 @@ Activate it on Windows:
 
 Activate it on Linux/Mac:
 
-> $ .venv/bin/activate
+> $ source .venv/bin/activate
 
 Generate a secret key:
 > $ python
@@ -54,14 +54,24 @@ Install it with pip:
 
 > $ pip install moviedb-1.0.0-py2.py3-none-any.whl
 
+Install waitress:
+
+> pip install waitress
+
 Run it with the following command:
 
-> $ flask --app moviedb run
+> $ waitres-serve --host 127.0.0.1 --call moviedb:create_app
 
 Then you see this output:
 
- > * Running on http://127.0.0.1:5000
+> INFO:waitress:Serving on http://127.0.0.1:8080
 
-Point your browser to http://127.0.0.1:5000
+Point your browser to http://127.0.0.1:8080
+
+Optional:
+
+Install nginx and configure it as a reverse proxy using this tutorial:
+
+https://flask.palletsprojects.com/en/stable/deploying/nginx/
 
 Now you can register users and login, after loggin in you can create movie entries.
