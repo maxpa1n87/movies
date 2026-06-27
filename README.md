@@ -48,7 +48,7 @@ Install build package and build the package:
 
 This will create a file in the dist folder:
 
-> dist/moviedb-1.0.0-py2.py3-none-any.whl
+> dist/moviedb-1.0.1-py2.py3-none-any.whl
 
 Or use the pre-build binary from here:
 
